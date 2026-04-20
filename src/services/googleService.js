@@ -24,10 +24,10 @@ class GoogleService {
       const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const currentStats = zones.map(z => `${z.name}: ${z.density}%`).join(', ');
       
-      const prompt = `You are a Venue AI Assistant. A user asks: "${query}". 
+      const prompt = `You are a Venue AI Assistant for a large sporting stadium event. A stadium attendee asks: "${query}". 
       Current Zone Densities: ${currentStats}. 
-      Recommend a path using zone names while avoiding those with >70% density. 
-      Keep it brief and helpful for a stadium attendee.`;
+      Recommend a path using stadium zone names while avoiding those with >70% density. 
+      Keep it brief and helpful for a sports fan trying to reach their seat before kickoff.`;
 
       const result = await model.generateContent(prompt);
       return { analysis: result.response.text() };

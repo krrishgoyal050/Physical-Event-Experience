@@ -228,7 +228,7 @@
                 <span id="user-name" style="font-size: 0.85rem;">Attendee</span>
             </div>
             <button class="btn btn-secondary" onclick="googleAuth()" id="auth-btn">
-                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" style="width: 16px;" alt=""> Sign In
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" style="width: 16px;" alt="Google Logo"> Sign In
             </button>
             <div id="connection-status" role="status" aria-live="polite">
                 <span class="loader"></span> Connecting...
@@ -242,8 +242,8 @@
             <section class="panel">
                 <h2 class="panel-title">🧠 Google AI Assistant</h2>
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="ai-query" placeholder="Ask AI: 'I'm hungry, avoid crowds'" style="flex:1; background: var(--surface); color: white; border: 1px solid var(--glass); padding: 8px; border-radius: 6px; font-size: 0.8rem;">
-                    <button class="btn" onclick="askAssistant()" style="padding: 8px;">🚀</button>
+                    <input type="text" id="ai-query" aria-label="Ask AI Assistant" placeholder="Ask AI: 'I'm hungry, avoid crowds'" style="flex:1; background: var(--surface); color: white; border: 1px solid var(--glass); padding: 8px; border-radius: 6px; font-size: 0.8rem;">
+                    <button class="btn" aria-label="Submit query to AI" onclick="askAssistant()" style="padding: 8px;">🚀</button>
                 </div>
                 <div id="ai-response" style="margin-top: 10px; font-size: 0.75rem; color: var(--secondary); background: rgba(34, 211, 238, 0.05); padding: 8px; border-radius: 6px; display: none;"></div>
             </section>

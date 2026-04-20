@@ -4,12 +4,12 @@
  */
 
 const zones = [
-  { id: 'gate_a', name: 'Main Gate A', density: 85, location: { lat: -37.8206, lng: 144.9834 }, baseWait: 10, type: 'entry' },
-  { id: 'gate_b', name: 'North Gate B', density: 20, location: { lat: -37.8190, lng: 144.9845 }, baseWait: 5, type: 'entry' },
-  { id: 'concourse_east', name: 'East Concourse', density: 60, location: { lat: -37.8198, lng: 144.9850 }, baseWait: 0, type: 'transit' },
-  { id: 'concourse_west', name: 'West Concourse', density: 30, location: { lat: -37.8198, lng: 144.9820 }, baseWait: 0, type: 'transit' },
-  { id: 'food_court', name: 'Central Food Court', density: 95, location: { lat: -37.8195, lng: 144.9835 }, baseWait: 15, type: 'lifestyle' },
-  { id: 'seating_zone_1', name: 'Lower Tier Seating', density: 40, location: { lat: -37.8200, lng: 144.9835 }, baseWait: 0, type: 'destination' }
+  { id: 'gate_a', name: 'Main Turnstile Gate A', density: 85, location: { lat: -37.8206, lng: 144.9834 }, baseWait: 10, type: 'entry' },
+  { id: 'gate_b', name: 'North Turnstile Gate B', density: 20, location: { lat: -37.8190, lng: 144.9845 }, baseWait: 5, type: 'entry' },
+  { id: 'concourse_east', name: 'East Pitch-side Concourse', density: 60, location: { lat: -37.8198, lng: 144.9850 }, baseWait: 0, type: 'transit' },
+  { id: 'concourse_west', name: 'West Pitch-side Concourse', density: 30, location: { lat: -37.8198, lng: 144.9820 }, baseWait: 0, type: 'transit' },
+  { id: 'food_court', name: 'Central Stadium Food Court', density: 95, location: { lat: -37.8195, lng: 144.9835 }, baseWait: 15, type: 'lifestyle' },
+  { id: 'seating_zone_1', name: 'Lower Tier Grandstand Seating', density: 40, location: { lat: -37.8200, lng: 144.9835 }, baseWait: 0, type: 'destination' }
 ];
 
 // Graph represented as adjacency list with weighted edges

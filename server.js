@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const admin = require('firebase-admin');
 const { google } = require('googleapis');
-require('dotenv').config();
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,11 +23,29 @@ app.use(helmet({
       "connect-src": ["'self'", "https://maps.googleapis.com"]
     }
   },
-  crossOriginResourcePolicy: { policy: "cross-origin" }
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  strictTransportSecurity: { maxAge: 31536000, includeSubDomains: true, preload: true }
 }));
 
 // CORS Configuration
-app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
+const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:3000', 'http://127.0.0.1:3000'];
+app.use(cors({ 
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }, 
+  methods: ['GET', 'POST'] 
+}));
+
+// Rate Limiter for Calendar Sync
+const calendarLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: 'Too many sync requests from this IP, please try again later.' }
+});
 
 // Body Parsers & Sanitization
 app.use(express.json({ limit: '10kb' })); // Limit body size to prevent DoS
@@ -68,7 +87,7 @@ app.get(['/crowd', '/queue', '/route', '/alert'], (req, res) => {
  * 📅 Calendar Sync (Specific Route)
  * POST used for state modification
  */
-app.post('/api/calendar/sync', async (req, res) => {
+app.post('/api/calendar/sync', calendarLimiter, async (req, res, next) => {
   const event = {
     summary: 'Stadium Event Day Optimizer',
     location: 'Gate B, Sports Venue',
@@ -91,10 +110,17 @@ app.post('/api/calendar/sync', async (req, res) => {
   }
 });
 
+// 404 Not Found Middleware
+app.use((req, res, next) => {
+    res.status(404).json({ error: 'Endpoint not found' });
+});
+
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong inside the venue engine!' });
+    const statusCode = err.status || 500;
+    const message = statusCode === 500 ? 'Something went wrong inside the venue engine!' : err.message;
+    res.status(statusCode).json({ error: message });
 });
 
 if (require.main === module) {
